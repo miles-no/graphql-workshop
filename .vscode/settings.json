@@ -1,0 +1,17 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "eslint.workingDirectories": [{ "directory": "./web", "changeProcessCWD": true }],
+  "typescript.preferences.quoteStyle": "single",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.tsdk": "./web/node_modules/typescript/lib",
+  "debug.internalConsoleOptions": "neverOpen"
+}
