@@ -1,0 +1,5 @@
+# Example query using dummy schema
+
+query GetHelloWorld {
+  hello
+}
