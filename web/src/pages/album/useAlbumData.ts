@@ -14,7 +14,8 @@ interface Artist {
 interface Review {
   id: number;
   author: string;
-  content: string;
+  rating: number;
+  comment: string;
   upVotes: number;
   downVotes: number;
   timestamp: Date;
@@ -24,7 +25,7 @@ interface Track {
   id: number;
   name: string;
   duration: number;
-  categories: Category[];
+  category: Category;
   price: number;
 }
 interface Category {
@@ -36,26 +37,25 @@ export const useAlbumData = () => {
   return {
     id: 1,
     name: 'Album 1',
-    reviews: [],
+    reviews: [
+      { id: 1, comment: 'Crap', author: 'Kurt Cobain', rating: 1, timestamp: new Date(), upVotes: 0, downVotes: 0 },
+    ],
     artist: {
       id: 1,
-      name: 'Arist 1',
+      name: 'Some Arist 1',
     },
     tracks: [
       {
         id: 1,
         name: 'Some song 1',
-        categories: [{ id: 1, name: 'Rock' }],
+        category: { id: 1, name: 'Rock' },
         duration: 250,
         price: 10,
       },
       {
         id: 2,
         name: 'Some song 2',
-        categories: [
-          { id: 1, name: 'Rock' },
-          { id: 2, name: 'Pop' },
-        ],
+        category: { id: 2, name: 'Pop' },
         duration: 201,
         price: 10,
       },

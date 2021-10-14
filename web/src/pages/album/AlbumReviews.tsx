@@ -1,6 +1,6 @@
 import { Album } from '@/pages/album/useAlbumData';
 import { ThumbDown, ThumbUp } from '@mui/icons-material';
-import { Box, Grid, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Box, Grid, IconButton, List, ListItem, ListItemText, Rating, Typography } from '@mui/material';
 import React from 'react';
 
 interface Props {
@@ -14,7 +14,14 @@ export const AlbumReviews: React.FC<Props> = ({ album }) => {
         {album.reviews?.map(x => (
           <ListItem divider key={x.id}>
             <ListItemText
-              primary={x.content}
+              primary={
+                <Box>
+                  <Box>
+                    <Rating value={x.rating} disabled size="small" />
+                  </Box>
+                  <Box padding={1}>{x.comment}</Box>
+                </Box>
+              }
               secondary={
                 <>
                   <Typography variant="body2" component="span" color="text.primary">
