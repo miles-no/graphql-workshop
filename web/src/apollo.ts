@@ -15,7 +15,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const link = from([
   errorLink,
   new RetryLink(),
-  new HttpLink({ uri: 'http://localhost:5000/graphql', credentials: 'same-origin' }),
+  new HttpLink({ uri: 'http://localhost:3000/graphql', credentials: 'same-origin' }),
 ]);
 
 const typePolicies: TypedTypePolicies = {

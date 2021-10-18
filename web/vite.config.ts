@@ -16,6 +16,11 @@ const config = () => ({
       },
     ],
   },
+  server: {
+    proxy: {
+      '/graphql': 'localhost:5000/graphql',
+    },
+  },
   plugins: [
     react({
       babel: {

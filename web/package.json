@@ -13,7 +13,8 @@
     "lint": "eslint --ext .ts,.tsx src",
     "serve": "vite preview",
     "format": "prettier --write src",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "download-schema": "npx apollo client:download-schema --endpoint=http://localhost:5000/graphql ../schema.graphql"
   },
   "license": "ISC",
   "devDependencies": {

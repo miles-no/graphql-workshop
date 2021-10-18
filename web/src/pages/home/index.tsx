@@ -6,15 +6,20 @@ import randomcolor from 'randomcolor';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCategoriesData } from './useCategoriesData';
+import { useGetGenresQuery } from '@/pages/home/operations/get-genres.gql';
 
 export const Home: React.FC = () => {
-  // todo: load categories from server
+  const genresResult = useGetGenresQuery();
   const categories = useCategoriesData();
   const colors = randomcolor({ count: categories.length, seed: 'miles', luminosity: 'dark' });
 
   // dummy query
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data: dummyData, error } = useGetHelloWorldQuery({ skip: true, variables: { id: '123' } });
+  const { data: dummyData, error } = useGetHelloWorldQuery({ skip: true, variables: { id: 'ola' } });
+
+  // if (genresResult.loading) {
+  //   return <div>Loading ...</div>;
+  // }
 
   return (
     <Content>
@@ -49,6 +54,7 @@ export const Home: React.FC = () => {
           </Link>
         </motion.div>
       ))}
+      <div></div>
     </Content>
   );
 };
