@@ -1,7 +1,7 @@
 # UPS. We should have the real schema here. Hint generate the schema from the server and overwrite this file
 
 type Query {
-  hello: String
+  hello(id: String): String
 }
 
 type Schema {

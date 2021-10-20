@@ -1,3 +1,4 @@
+import { useGetHelloWorldQuery } from '@/pages/home/operations/get-hello-world.gql';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import { Paper, styled, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
@@ -10,6 +11,11 @@ export const Home: React.FC = () => {
   // todo: load categories from server
   const categories = useCategoriesData();
   const colors = randomcolor({ count: categories.length, seed: 'miles', luminosity: 'dark' });
+
+  // dummy query
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { data: dummyData, error } = useGetHelloWorldQuery({ skip: true, variables: { id: '123' } });
+
   return (
     <Content>
       <Typography className="title" gutterBottom variant="h1" component="div">

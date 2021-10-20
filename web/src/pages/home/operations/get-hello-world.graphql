@@ -1,5 +1,5 @@
 # Example query using dummy schema
 
-query GetHelloWorld {
-  hello
+query GetHelloWorld($id: String) {
+  hello(id: $id)
 }
