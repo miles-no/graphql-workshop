@@ -12,8 +12,14 @@ const typeDefs = gql`
         artists: [Artist]
         genres(genreIds: [Int]): [Genre]
     }
+    type Mutation {
+        saveArtist(artist: ArtistInput): Artist
+    }
     type Artist {
         id: Int
+        name: String
+    }
+    input ArtistInput {
         name: String
     }
     type Genre {
@@ -51,6 +57,14 @@ const resolvers = {
           };
         });
     },
+  },
+  Mutation: {
+    saveArtist: (_, { artist }) => {
+      return {
+        id: 1,
+        ...artist
+      };
+    }
   },
   Genre: {
     tracks: ({ id: genreId }, args, context, info) => {
