@@ -1,72 +1,80 @@
-var express = require('express');
-var {graphqlHTTP} = require('express-graphql');
-var {buildSchema} = require('graphql');
+// import { GraphQLObjectType, GraphQLSchema, GraphQLString } from 'graphql';
+
+const express = require('express');
+const { ApolloServer, gql } = require('apollo-server-express');
 const sqlite3 = require('better-sqlite3');
 
 let db = sqlite3('../data/database.db', {});
 
-var schema = buildSchema(`
-  type Query {
-    hello(id: String): String
-    allArtists: [Artist]
-    allGenres: [Genre]
-    genres(genreIds: [Int]): [Genre]
-  }
-  type Artist {
-    id: Int
-    name: String
-  }
-  type Genre {
-    id: Int
-    name: String
-  }
-`);
-
-var root = {
-    hello: ({id}) => {
-        return 'Hello ' + id;
-    },
-    allArtists: () => {
-        return db.prepare('SELECT * FROM Artist')
-            .all()
-            .map((record) => {
-                return {
-                    id: record.ArtistId,
-                    name: record.Name
-                };
-            });
-    },
-    allGenres: () => {
-        return db.prepare('SELECT * FROM Genre')
-            .all()
-            .map((record) => {
-                return {
-                    id: record.GenreId,
-                    name: record.Name
-                };
-            });
-    },
-    genres: ({genreIds = []}) => {
-        // const results = genreIds.length > 0 ?
-        //   db.prepare('SELECT * FROM Genre WHERE genreId IN (?)').all(genreIds) :
-        //   db.prepare('SELECT * FROM Genre').all();
-        return db.prepare('SELECT * FROM Genre')
-          .all()
-          .filter((record) => genreIds.includes(record.GenreId))
-          .map((record) => {
-              return {
-                  id: record.GenreId,
-                  name: record.Name
-              };
-          });
+const typeDefs = gql`
+    type Query {
+        hello: String
+        artists: [Artist]
+        genres(genreIds: [Int]): [Genre]
     }
+    type Artist {
+        id: Int
+        name: String
+    }
+    type Genre {
+        id: Int
+        name: String
+        tracks: [Track]
+    }
+    type Track {
+        id: Int
+        name: String
+    }
+`;
+
+const resolvers = {
+  Query: {
+    hello: () => 'Hello world!',
+    artists: () => {
+      return db.prepare('SELECT * FROM Artist')
+        .all()
+        .map((record) => {
+          return {
+            id: record.ArtistId,
+            name: record.Name,
+          };
+        });
+    },
+    genres: (parent, { genreIds }, context, info) => {
+      return db.prepare('SELECT * FROM Genre')
+        .all()
+        .filter((record) => genreIds === undefined || genreIds.includes(record.GenreId))
+        .map((record) => {
+          return {
+            id: record.GenreId,
+            name: record.Name,
+          };
+        });
+    },
+  },
+  Genre: {
+    tracks: ({ id: genreId }, args, context, info) => {
+      return db.prepare('SELECT * FROM Track WHERE GenreId = ?')
+        .all(genreId)
+        .map((record) => {
+          return {
+            id: record.TrackId,
+            name: record.Name,
+          };
+        });
+    },
+  },
 };
 
-var app = express();
-app.use('/graphql', graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: true,
-}));
-app.listen(5000);
-console.log('Running a GraphQL API server at http://localhost:5000/graphql');
+const server = new ApolloServer({ typeDefs, resolvers });
+
+server.start().then(() => {
+  const app = express();
+  server.applyMiddleware({ app });
+
+  app.listen({ port: 5000 }, () =>
+    console.log('Now browse to http://localhost:5000' + server.graphqlPath),
+  );
+});
+
+
