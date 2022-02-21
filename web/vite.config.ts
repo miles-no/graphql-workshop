@@ -1,53 +1,17 @@
-import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
-import Checker from 'vite-plugin-checker';
-
-function pathResolve(dir: string) {
-  return resolve(__dirname, '.', dir);
-}
+import reactPlugin from '@vitejs/plugin-react';
+import checkPlugin from 'vite-plugin-checker';
+import tsconfigPathsPlugin from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 const config = () => ({
-  resolve: {
-    alias: [
-      {
-        find: /@\//,
-        replacement: pathResolve('src') + '/',
-      },
-    ],
-  },
   plugins: [
-    react({
-      babel: {
-        plugins: [
-          /*[
-            "@emotion",
-            {
-              importMap: {
-                "@mui/material": {
-                  styled: {
-                    canonicalImport: ["@emotion/styled", "default"],
-                    styledBaseImport: ["@mui/material", "styled"],
-                  },
-                },
-                "@mui/material/styles": {
-                  styled: {
-                    canonicalImport: ["@emotion/styled", "default"],
-                    styledBaseImport: ["@mui/material/styles", "styled"],
-                  },
-                },
-              },
-            },
-          ],*/
-        ],
-      },
-    }),
-    Checker({
+    tsconfigPathsPlugin(),
+    reactPlugin(),
+    checkPlugin({
       typescript: true,
       overlay: true,
       eslint: {
-        files: 'src',
-        extensions: ['.ts', '.tsx'],
+        lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
       },
     }),
   ],

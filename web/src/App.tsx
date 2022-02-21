@@ -4,7 +4,7 @@ import { Artist } from '@/pages/artist';
 import { Category } from '@/pages/category';
 import { Home } from '@/pages/home';
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.scss';
 
 const App: React.FC = () => {
@@ -13,20 +13,12 @@ const App: React.FC = () => {
       <Router>
         <Header />
         <main>
-          <Switch>
-            <Route path="/artist/:id">
-              <Artist />
-            </Route>
-            <Route path="/album/:id">
-              <Album />
-            </Route>
-            <Route path="/category/:id">
-              <Category />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="/artist/:id" element={<Artist />} />
+            <Route path="/album/:id" element={<Album />} />
+            <Route path="/category/:id" element={<Category />} />
+            <Route path="/" element={<Home />} />
+          </Routes>
         </main>
       </Router>
     </div>
