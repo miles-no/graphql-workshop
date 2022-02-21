@@ -2,17 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
-namespace Jukebox.Data
+namespace Jukebox.Data;
+
+[DebuggerDisplay("{Name} (ArtistId = {ArtistId})")]
+public class Artist
 {
-    [DebuggerDisplay("{Name} (ArtistId = {ArtistId})")]
-    public class Artist
-    {
-        [Key]
-        public int ArtistId { get; set; }
+    [Key] public int ArtistId { get; set; }
 
-        [Required, MaxLength(120)]
-        public string Name { get; set; }
+    [Required] [MaxLength(120)] public string Name { get; set; }
 
-        public IList<Album> Albums { get; set; }
-    }
+    public IList<Album> Albums { get; set; }
 }
