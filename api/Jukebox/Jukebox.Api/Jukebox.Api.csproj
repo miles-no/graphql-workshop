@@ -8,4 +8,10 @@
         <ProjectReference Include="..\Jukebox.Data\Jukebox.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="HotChocolate.AspNetCore" Version="12.6.0" />
+      <PackageReference Include="Humanizer" Version="2.14.1" />
+      <PackageReference Include="Sprinkles" Version="0.0.2" />
+    </ItemGroup>
+
 </Project>

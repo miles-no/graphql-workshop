@@ -1,4 +1,6 @@
 using System.IO;
+using HotChocolate.Types;
+using Jukebox.Api.Category;
 using Jukebox.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sprinkles;
 
 namespace Jukebox.Api;
 
@@ -17,6 +20,9 @@ public class Startup
     {
         var path = Path.GetFullPath("../../../data/database.db");
         services.AddDbContext<DatabaseContext>(c => c.UseSqlite($"Data Source={path}"));
+
+        services.AddGraphQLServer()
+            .AutoRegister<JukeboxQuery>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,7 +34,10 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapGraphQL();
             endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
         });
+        
+        
     }
 }
