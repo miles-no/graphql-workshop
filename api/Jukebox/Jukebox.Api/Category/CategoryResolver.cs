@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using HotChocolate;
@@ -8,18 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Jukebox.Api.Category;
 
-[ExtendObjectType(typeof(JukeboxQuery))]
+[ExtendObjectType(typeof(Genre))]
 public class CategoryResolver
 {
-    public Task<List<Genre>> GetCategories([Service] DatabaseContext context, CancellationToken token)
+    public async Task<List<Data.Track>> GetTracks([Parent] Genre category, [Service] DatabaseContext databaseContext, CancellationToken cancellationToken)
     {
-        return context.Genre.ToListAsync(token);
+        return await databaseContext.Track.Where(x => x.GenreId == category.GenreId).ToListAsync(cancellationToken);
     }
-    
-    public Task<Genre> GetCategory(int id, [Service] DatabaseContext context, CancellationToken token)
-    {
-        return context.Genre.SingleAsync(x => x.GenreId == id);
-    }
-    
-    
 }

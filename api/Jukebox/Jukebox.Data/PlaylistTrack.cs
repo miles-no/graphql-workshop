@@ -11,7 +11,7 @@ public class PlaylistTrack
 
     [Key] [Column(Order = 2)] public int TrackId { get; set; }
 
-    [ForeignKey("PlaylistId")] public Playlist Playlist { get; set; }
+    //[ForeignKey("PlaylistId")] public Playlist Playlist { get; set; }
 
-    [ForeignKey("TrackId")] public Track Track { get; set; }
+    //[ForeignKey("TrackId")] public Track Track { get; set; }
 }

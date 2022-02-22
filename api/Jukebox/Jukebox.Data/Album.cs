@@ -14,8 +14,8 @@ public class Album
 
     [Required] public int ArtistId { get; set; }
 
-    [ForeignKey("ArtistId")] public Artist Artist { get; set; }
-
-    public IList<Track> Tracks { get; set; }
-    public IList<AlbumReview> Reviews { get; set; }
+    //[ForeignKey("ArtistId")] public Artist Artist { get; set; }
+    //public IList<Track> Tracks { get; set; }
+    //public IList<AlbumReview> Reviews { get; set; }
+    
 }

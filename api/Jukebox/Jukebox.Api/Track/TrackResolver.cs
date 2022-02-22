@@ -4,10 +4,10 @@ using HotChocolate.Types;
 using Jukebox.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Jukebox.Api.Album;
+namespace Jukebox.Api.Track;
 
 [ExtendObjectType(typeof(Data.Track))]
-public class TrackAlbumResolver
+public class TrackResolver
 {
     public async Task<Data.Album> GetAlbum([Parent] Data.Track track, [Service] DatabaseContext databaseContext)
     {

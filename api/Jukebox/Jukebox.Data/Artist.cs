@@ -11,5 +11,5 @@ public class Artist
 
     [Required] [MaxLength(120)] public string Name { get; set; }
 
-    public IList<Album> Albums { get; set; }
+    //public IList<Album> Albums { get; set; }
 }

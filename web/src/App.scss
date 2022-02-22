@@ -38,9 +38,13 @@ main {
 
 .category {
   display: inline-flex;
-  height: 150px;
+  height: 80px;
   width: 300px;
-  padding: 30px;
+  padding: 0px;
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
   margin: 20px;
 }
 .table {

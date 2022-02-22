@@ -25,9 +25,9 @@ public class Track
 
     public decimal UnitPrice { get; set; }
 
-    [ForeignKey("AlbumId")] public Album Album { get; set; }
+    //[ForeignKey("AlbumId")] public Album Album { get; set; }
 
-    [ForeignKey("MediaTypeId")] public MediaType MediaType { get; set; }
+    //[ForeignKey("MediaTypeId")] public MediaType MediaType { get; set; }
 
-    [ForeignKey("GenreId")] public Genre Genre { get; set; }
+    //[ForeignKey("GenreId")] public Genre Genre { get; set; }
 }

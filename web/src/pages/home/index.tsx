@@ -1,20 +1,19 @@
-import { useGetHelloWorldQuery } from '@/pages/home/operations/get-hello-world.gql';
+import { useGetCategoriesQuery } from '@/pages/home/operations/get-categories.gql';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import { Paper, styled, Typography } from '@mui/material';
+import { CircularProgress, Paper, styled, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import randomcolor from 'randomcolor';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCategoriesData } from './useCategoriesData';
 
 export const Home: React.FC = () => {
-  // todo: load categories from server
-  const categories = useCategoriesData();
-  const colors = randomcolor({ count: categories.length, seed: 'miles', luminosity: 'dark' });
+  const { data, loading } = useGetCategoriesQuery();
 
-  // dummy query
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data: dummyData, error } = useGetHelloWorldQuery({ skip: true, variables: { id: '123' } });
+  const colors = randomcolor({ count: data?.categories?.length ?? 0, seed: 'miles', luminosity: 'dark' });
+
+  if (loading) {
+    return <CircularProgress />;
+  }
 
   return (
     <Content>
@@ -22,10 +21,10 @@ export const Home: React.FC = () => {
         <MusicNoteIcon className="logo" />
         <span>ukebox</span>
       </Typography>
-      {categories.map(c => (
+      {data?.categories?.map(c => (
         <motion.div
           className="category-list"
-          key={c.id}
+          key={c?.id}
           initial={{ scale: 0, rotate: 180 }}
           animate={{ rotate: 0, scale: 1 }}
           transition={{
@@ -34,16 +33,21 @@ export const Home: React.FC = () => {
             damping: 35,
           }}
         >
-          <Link to={`/category/${c.id}`}>
+          <Link to={`/category/${c?.id}`}>
             <Paper
               elevation={6}
               className="category"
               variant="elevation"
-              style={{ backgroundColor: colors[c.id - 1] }}
+              style={{ backgroundColor: colors[c?.id ?? 0 - 1] }}
               square={false}
             >
-              <Typography gutterBottom variant="h2" component="div">
-                {c.name}
+              <Typography
+                gutterBottom
+                variant="h4"
+                component="div"
+                style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
+              >
+                {c?.name}
               </Typography>
             </Paper>
           </Link>

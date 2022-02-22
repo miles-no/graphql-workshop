@@ -26,5 +26,5 @@ public class Invoice
 
     [Required] public decimal Total { get; set; }
 
-    [ForeignKey("CustomerId")] public Customer Customer { get; set; }
+    //[ForeignKey("CustomerId")] public Customer Customer { get; set; }
 }

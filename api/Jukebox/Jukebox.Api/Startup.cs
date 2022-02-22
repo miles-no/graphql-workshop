@@ -1,4 +1,5 @@
 using System.IO;
+using HotChocolate.Execution;
 using HotChocolate.Types;
 using Jukebox.Api.Category;
 using Jukebox.Data;
@@ -21,8 +22,21 @@ public class Startup
         var path = Path.GetFullPath("../../../data/database.db");
         services.AddDbContext<DatabaseContext>(c => c.UseSqlite($"Data Source={path}"));
 
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                builder =>
+                {
+                    builder
+                        .WithOrigins("http://localhost:3000") 
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                });
+        });
+        
         services.AddGraphQLServer()
-            .AutoRegister<JukeboxQuery>();
+            .AutoRegister<JukeboxQuery, JukeboxMutation>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +46,7 @@ public class Startup
 
         app.UseRouting();
 
+        app.UseCors("AllowAll");
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapGraphQL();

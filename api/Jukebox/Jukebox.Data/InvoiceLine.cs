@@ -17,7 +17,7 @@ public class InvoiceLine
 
     [Required] public int Quantity { get; set; }
 
-    [ForeignKey("CustomerId")] public Customer Customer { get; set; }
+    //[ForeignKey("CustomerId")] public Customer Customer { get; set; }
 
-    [ForeignKey("TrackId")] public Track Track { get; set; }
+    //[ForeignKey("TrackId")] public Track Track { get; set; }
 }

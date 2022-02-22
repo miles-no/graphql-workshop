@@ -9,5 +9,5 @@ public class Genre
 
     [MaxLength(120)] public string Name { get; set; }
 
-    public IList<Track> Tracks { get; set; }
+    //public IList<Track> Tracks { get; set; }
 }

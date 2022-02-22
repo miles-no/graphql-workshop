@@ -38,5 +38,5 @@ public class Employee
 
     [MaxLength(60)] public string Email { get; set; }
 
-    [ForeignKey("ReportsTo")] public Employee ReportsToManager { get; set; }
+    //[ForeignKey("ReportsTo")] public Employee ReportsToManager { get; set; }
 }

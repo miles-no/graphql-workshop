@@ -18,5 +18,5 @@ public class AlbumReview
 
     [Required] public int AlbumId { get; set; }
 
-    [ForeignKey("AlbumId")] public Album Album { get; set; }
+    //[ForeignKey("AlbumId")] public Album Album { get; set; }
 }

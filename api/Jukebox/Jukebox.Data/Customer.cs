@@ -33,5 +33,5 @@ public class Customer
 
     public int SupportRepId { get; set; }
 
-    [ForeignKey("SupportRepId")] public Employee SupportRep { get; set; }
+    //[ForeignKey("SupportRepId")] public Employee SupportRep { get; set; }
 }
